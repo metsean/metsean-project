@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+<head>
+    <title>MetSean</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jumbotron-narrow.css') }}">
+    <script type="text/javascript" src="http://kozea.github.com/pygal.js/latest/pygal-tooltips.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="/">Home</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">MetSean</h3>
+        </div>
+
+        <figure>
+                <!-- Pygal render() result: -->
+                {{plot|safe}}
+                <!-- End of Pygal render() result: -->
+        </figure>
+
+        <div class="w3-clear nextprev">
+            <a class="btn btn btn-success" href="/{{region}}">Back to table</a>
+        </div>
+
+
+       <div class="row marketing">
+            <div class="col-lg-12">
+                <h4>About this page</h4>
+                <p>The plot above shows the accuracy of the rain forecast score for the different providers leading up to the forcast day. The accuracy is the ratio of correct rain/dry forecasts to total recorded days (the scoring is shown in green on the table page). The baseline indicates the fraction of days where rain does not occur. This plot is updated daily.</p>
+            </d>
+        </div>
+
+        <footer class="footer">
+            <p>MetSean 2018</p>
+        </footer>
+ 
+    </div>
+</body>
+</html>

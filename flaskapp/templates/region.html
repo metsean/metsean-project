@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+<head>
+    <title>MetSean</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jumbotron-narrow.css') }}">
+ 
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="/">Home</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">MetSean</h3>
+        </div>
+
+
+
+        <div class="jumbotron">
+            <h3>Forecasts for {{region}} for {{dateSTR}}:</h3>
+            <table class="table">
+                <tr>
+                    <th>days prior</th>
+                    {% for forecaster in (forecasterLst) %}
+                    <th>{{forecaster}}</th>
+                    {% endfor %}
+                </tr> 
+                {% for delta,a,b,c,d in (dataAll) %}             
+                <tr>
+                    <th width="20%"> {{ delta }} </th>
+                    <td width="20%" bgcolor={{colorsAll[loop.index0,0]}} align="left" title={{rainAll[loop.index0,0]}}> {{ a }} </td>
+                    <td width="20%" bgcolor={{colorsAll[loop.index0,1]}} align="left" title={{rainAll[loop.index0,1]}}> {{ b }} </td>
+                    <td width="20%" bgcolor={{colorsAll[loop.index0,2]}} align="left" title={{rainAll[loop.index0,2]}}> {{ c }} </td>
+                    <td width="20%" bgcolor={{colorsAll[loop.index0,3]}} align="left" title={{rainAll[loop.index0,3]}}> {{ d }} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+ 
+         <div class="jumbotron">
+            <h4>Observations:</h4>
+            <table class="table">
+
+                <tr>
+                    <th>rain maximum (mm)</th>
+                    <th>peak wind gust (km/h)</th>
+                    <th>wind direction</th>
+                    <th>temperature high (ºC)</th>
+                    <th>temperature low (ºC)</th>
+                </tr> 
+                <tr>
+                    <td width="20%"> {{ dataObs[0] }} </th>
+                    <td width="20%"> {{ dataObs[1] }} </td>
+                    <td width="20%"> {{ dataObs[2] }} </td>
+                    <td width="20%"> {{ dataObs[3] }} </td>
+                    <td width="20%"> {{ dataObs[4] }} </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="w3-clear nextprev">
+            <a class="btn btn btn-success" href="{{region}}_{{(date-delta).year}}-{{(date-delta).month}}-{{(date-delta).day}}">Previous day</a>
+            <a class="btn btn btn-success" href="{{region}}_{{(date+delta).year}}-{{(date+delta).month}}-{{(date+delta).day}}">Next day</a>
+            <a class="btn btn btn-success" href="analysis-{{region}}">Stats</a>
+        </div>
+
+        <div class="row marketing">
+            <div class="col-lg-12">
+                <h4>About this page</h4>
+                <p>Displayed above are text forecasts issued by different providers for the date {{dateSTR}}. These forecasts are recorded daily as they are issued in the days prior to the forecasted day. For dates prior to the present, the observed weather as recorded at local weather stations is summarized in the bottom table and the green overlay indicates correctly forecasted rain/dry days. The forecast scores as correct if rain is forecasted and rain is observed, or if rain is not forecasted and rain is not observed.</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>MetSean 2018</p>
+        </footer>
+
+    </div>
+</body>
+ 
+</html>
